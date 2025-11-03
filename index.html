@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | AI Meme Caption Generator</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="auth-body">
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Login to your Meme Caption Generator account</p>
+      <form id="loginForm">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="••••••••" required />
+
+        <button type="submit" class="btn-primary">Login</button>
+        <p class="message" id="message"></p>
+      </form>
+      <p class="redirect">
+        Don’t have an account? <a href="register.html">Sign up</a>
+      </p>
+    </div>
+  </div>
+  <script src="js/auth.js"></script>
+</body>
+</html>

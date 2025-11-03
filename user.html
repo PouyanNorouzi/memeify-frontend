@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Dashboard | AI Meme Caption Generator</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <h2>Welcome, <span id="userEmail">User</span></h2>
+      <p class="usage">API Usage: <span id="usageCount">0</span> / 20</p>
+      <a href="index.html" class="btn-logout">Logout</a>
+    </header>
+
+    <main class="dashboard-main">
+      <h3>Generate a Funny Caption</h3>
+      <p class="subtitle">Upload a meme image and let AI come up with something hilarious!</p>
+
+      <div class="upload-section">
+        <input type="file" id="imageInput" accept="image/*" />
+        <button id="generateBtn" class="btn-primary">Generate Caption</button>
+      </div>
+
+      <div class="result-section" id="resultSection" style="display:none;">
+        <img id="previewImg" src="" alt="Uploaded Meme" class="preview-img" />
+        <div class="caption-box">
+          <h4>AI Generated Caption:</h4>
+          <p id="captionResult">Loading...</p>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="js/user.js"></script>
+</body>
+</html>
