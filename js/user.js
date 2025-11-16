@@ -1,6 +1,6 @@
 import { logout } from "./modules/auth.js";
 
-const ADMIN_ROLE_ID = 0;
+const ADMIN_ROLE_ID = 1;
 
 const userInfoString = localStorage.getItem("memeify_user");
 if (!userInfoString) {
@@ -16,6 +16,6 @@ document.getElementById("logout").onclick = () => {
   logout().then(() => (window.location.href = "index.html"));
 };
 
-if (user.roles.includes(0)) {
+if (user.roles.map((r) => r.id).includes(ADMIN_ROLE_ID)) {
   document.getElementById("admin-link").style.display = "block";
 }

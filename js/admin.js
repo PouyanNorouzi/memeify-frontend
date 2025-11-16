@@ -2,9 +2,17 @@ import { API_LINK } from "./modules/apiLink.js";
 
 const API_ADMIN_BASE = `${API_LINK}/api/admin`;
 const TOKEN_KEY = "memeify_token";
+const TOKEN_USER = "memeify_user";
+const ADMIN_ROLE_ID = 1;
 
 function getToken() {
   return localStorage.getItem(TOKEN_KEY);
+}
+
+function getCurrentUser() {
+  const userText = localStorage.getItem(TOKEN_USER);
+  if (!userText) return null;
+  return JSON.parse(userText);
 }
 
 function clearToken() {
@@ -21,7 +29,7 @@ async function handleResponse(res) {
       payload ||
       res.statusText;
     throw new Error(
-      typeof errMessage === "string" ? errMessage : JSON.stringify(errMessage)
+      typeof errMessage === "string" ? errMessage : JSON.stringify(errMessage),
     );
   }
   return payload;
@@ -106,34 +114,37 @@ function renderUsers(users) {
   }
 
   users.forEach((u) => {
+    if (u.id === getCurrentUser().id) return;
     const tr = document.createElement("tr");
-    console.log(u)
 
     const username = u.username ?? u.userName ?? u.name ?? "(no username)";
     tr.appendChild(createCell(username));
     tr.appendChild(createCell(u.email ?? ""));
 
-    tr.appendChild(createCell(String(u.roles)));
+    tr.appendChild(createCell(u.roles.map((r) => r.roleType).join(", ")));
 
     const actionsTd = document.createElement("td");
     actionsTd.className = "actions";
 
-    const promoteBtn = document.createElement("button");
-    promoteBtn.className = "btn btn-promote";
-    promoteBtn.textContent = "Promote";
-    promoteBtn.addEventListener("click", async () => {
-      if (!confirm(`Promote ${username} to admin?`)) return;
-      try {
-        setStatus("Promoting...", "#333");
-        const id = getIdFromUser(u);
-        const result = await promoteUser(id);
-        setStatus(result.message || "Promoted.", "green");
-        await reloadUsers();
-      } catch (err) {
-        setStatus(err.message || "Promote failed");
-        console.error("Promote error:", err);
-      }
-    });
+    if (!u.roles.map((r) => r.id).includes(ADMIN_ROLE_ID)) {
+      const promoteBtn = document.createElement("button");
+      promoteBtn.className = "btn btn-promote";
+      promoteBtn.textContent = "Promote";
+      promoteBtn.addEventListener("click", async () => {
+        if (!confirm(`Promote ${username} to admin?`)) return;
+        try {
+          setStatus("Promoting...", "#333");
+          const id = getIdFromUser(u);
+          const result = await promoteUser(id);
+          setStatus(result.message || "Promoted.", "green");
+          await reloadUsers();
+        } catch (err) {
+          setStatus(err.message || "Promote failed");
+          console.error("Promote error:", err);
+        }
+      });
+      actionsTd.appendChild(promoteBtn);
+    }
 
     const deleteBtn = document.createElement("button");
     deleteBtn.className = "btn btn-delete";
@@ -152,7 +163,6 @@ function renderUsers(users) {
       }
     });
 
-    actionsTd.appendChild(promoteBtn);
     actionsTd.appendChild(deleteBtn);
     tr.appendChild(actionsTd);
 
@@ -173,6 +183,16 @@ async function reloadUsers() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  if(!getToken() || !getCurrentUser()) {
+    alert("user not logged in");
+    window.location.href = "login.html";
+  }
+
+  if (!getCurrentUser().roles.map(r => r.id).includes(ADMIN_ROLE_ID)) {
+    alert("you are not an admin");
+    window.location.href = "user.html";
+  }
+
   const refreshBtn = document.getElementById("refreshBtn");
   const logoutBtn = document.getElementById("logoutBtn");
 
