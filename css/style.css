@@ -246,6 +246,29 @@ form input:focus {
   font-size: 1.1em;
 }
 
+/* Admin link in user dashboard */
+#admin-link {
+  display: inline-block;
+  margin-top: 12px;
+  color: #94a3b8;
+  background: transparent;
+  border: 1px solid rgba(56,189,248,0.12);
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.08s ease, box-shadow 0.12s ease;
+}
+#admin-link:hover {
+  background: rgba(56,189,248,0.06);
+  color: #38bdf8;
+  transform: translateY(-1px);
+}
+#admin-link:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(56,189,248,0.12);
+}
+
 /* ========== ADMIN DASHBOARD ========== */
 .admin-body {
   background: linear-gradient(135deg, #0f172a, #1e293b);
@@ -284,12 +307,31 @@ form input:focus {
   color: #fff;
   padding: 10px 18px;
   border-radius: 8px;
+  border: none;
   text-decoration: none;
   font-weight: 500;
-  transition: background 0.3s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s ease, transform 0.08s ease, box-shadow 0.2s ease;
 }
 .btn-logout:hover {
   background: #dc2626;
+}
+.btn-logout:active {
+  transform: translateY(1px);
+}
+.btn-logout:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(220,38,38,0.15);
+}
+.btn-logout[disabled], .btn-logout.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .admin-table-section h3 {

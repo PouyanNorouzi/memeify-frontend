@@ -107,30 +107,13 @@ function renderUsers(users) {
 
   users.forEach((u) => {
     const tr = document.createElement("tr");
+    console.log(u)
 
     const username = u.username ?? u.userName ?? u.name ?? "(no username)";
     tr.appendChild(createCell(username));
     tr.appendChild(createCell(u.email ?? ""));
 
-    // Show roles in friendly way if available
-    let rolesText = "";
-    if (Array.isArray(u.roles)) {
-      // roles might be array of role objects or ids
-      rolesText = u.roles
-        .map((r) => {
-          if (!r) return "";
-          if (typeof r === "string" || typeof r === "number") return String(r);
-          // if role is object with name field
-          if (r.name) return r.name;
-          if (r.role) return r.role;
-          return JSON.stringify(r);
-        })
-        .filter(Boolean)
-        .join(", ");
-    } else {
-      rolesText = String(u.roles ?? "");
-    }
-    tr.appendChild(createCell(rolesText));
+    tr.appendChild(createCell(String(u.roles)));
 
     const actionsTd = document.createElement("td");
     actionsTd.className = "actions";
