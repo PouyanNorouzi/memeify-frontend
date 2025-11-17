@@ -2,29 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Login | AI Meme Caption Generator</title>
+  <title>Memeify — AI Meme Caption Generator</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="auth-body">
-  <div class="auth-container">
-    <div class="auth-card">
-      <h2>Welcome Back</h2>
-      <p class="subtitle">Login to your Meme Caption Generator account</p>
-      <form id="loginForm">
-        <label for="username">username</label>
-        <input type="text" id="username" placeholder="your_username" required />
+<body class="dashboard-body">
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <h2>Memeify</h2>
+      <p class="usage">AI-powered meme caption generator</p>
+    </header>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="••••••••" required />
+    <main class="dashboard-main">
+      <h3>Make people laugh with a single upload</h3>
+      <p class="subtitle">Upload an image and let our AI suggest hilarious captions. Quick, fun, and easy to share.</p>
 
-        <button type="submit" class="btn-primary">Login</button>
-        <p class="message" id="message"></p>
-      </form>
-      <p class="redirect">
-        Don’t have an account? <a href="register.html">Sign up</a>
-      </p>
-    </div>
+      <div class="upload-section" style="margin-top:24px; gap:12px; flex-direction:row; justify-content:center;">
+        <a href="login.html" class="btn-primary" style="max-width:220px; display:inline-block; text-align:center;">Login</a>
+        <a href="register.html" class="btn-secondary" style="max-width:220px; display:inline-block; text-align:center; margin-left:12px;">Sign Up</a>
+      </div>
+
+      <section style="margin-top:32px; text-align:left;">
+        <h4 style="color:#fff; margin-bottom:8px;">What is Memeify?</h4>
+        <p class="subtitle" style="margin-bottom:16px;">Memeify uses state-of-the-art AI to generate witty, context-aware captions for your images. Perfect for social posts, group chats, and a good laugh.</p>
+
+        <h4 style="color:#fff; margin-top:12px;">Features</h4>
+        <ul style="color:#94a3b8; margin-top:10px; line-height:1.6;">
+          <li>Instant AI-generated captions tailored to your image</li>
+          <li>Simple account management and usage tracking</li>
+          <li>Save your favorite captions for later</li>
+        </ul>
+      </section>
+    </main>
   </div>
-  <script type="module" src="js/login.js"></script>
 </body>
 </html>
