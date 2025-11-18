@@ -1,6 +1,7 @@
 import { API_LINK } from "./apiLink.js";
 
 const API_AUTH_BASE = `${API_LINK}/api/auth`;
+const API_USER_BASE = `${API_LINK}/api/users`;
 const TOKEN_KEY = "memeify_token";
 const USER_KEY = "memeify_user";
 
@@ -85,6 +86,18 @@ export async function logout() {
   });
   clearToken();
   return true;
+}
+
+export async function getUser(userId) {
+  const token = getToken();
+  const res = await fetch(`${API_USER_BASE}/${userId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const payload = await handleResponse(res);
+  localStorage.setItem(USER_KEY, JSON.stringify(payload));
+  return payload;
 }
 
 /* ---- utility for authenticated requests to other APIs ---- */

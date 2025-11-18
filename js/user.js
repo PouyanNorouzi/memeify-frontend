@@ -1,18 +1,12 @@
-import { logout } from "./modules/auth.js";
+import { getUser, logout } from "./modules/auth.js";
 import { API_LINK } from "./modules/apiLink.js";
 
 const ADMIN_ROLE_ID = 1;
 const API_CAPTION_BASE = `${API_LINK}/api/caption`;
 
-// Authentication Check
-const userInfoString = localStorage.getItem("memeify_user");
-if (!userInfoString) {
-  alert("You are not logged in");
-  window.location.href = "login.html";
-}
+let user;
 
-const user = JSON.parse(userInfoString);
-document.getElementById("userEmail").innerText = user.username;
+updateUser();
 
 // Logout Handler
 document.getElementById("logout").onclick = () => {
@@ -45,12 +39,11 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
 
   try {
     const token = localStorage.getItem("memeify_token");
-    console.log("All localStorage keys:", Object.keys(localStorage));
-    console.log("Token value:", token);
 
     if (!token) {
       alert("Please log in first!");
-      document.getElementById("captionResult").textContent = "Error: Not authenticated.";
+      document.getElementById("captionResult").textContent =
+        "Error: Not authenticated.";
       return;
     }
 
@@ -65,14 +58,35 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
     if (!response.ok) {
       if (response.status === 401) {
         throw new Error("Unauthorized: Please log in first.");
+      } else if (response.status === 429) {
+        throw new Error("Too many API calls");
       }
       throw new Error("Failed to generate caption.");
     }
 
     const data = await response.json();
     document.getElementById("captionResult").textContent = data.caption;
+    document.getElementById("usageCount").innerText = data.apiCalls;
   } catch (error) {
-    document.getElementById("captionResult").textContent = "Error generating caption.";
+    document.getElementById("captionResult").textContent =
+      "Error generating caption. " + error.message;
     console.error(error);
   }
 });
+
+async function updateUser() {
+  // Authentication Check
+  const userInfoString = localStorage.getItem("memeify_user");
+  if (!userInfoString) {
+    alert("You are not logged in");
+    window.location.href = "login.html";
+  }
+  // get username and put it in its places
+  user = JSON.parse(userInfoString);
+
+  user = await getUser(user.id);
+
+  document.getElementById("userEmail").innerText = user.username;
+  // get usage count
+  document.getElementById("usageCount").innerText = user.apiCalls;
+}

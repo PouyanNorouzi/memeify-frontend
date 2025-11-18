@@ -4,6 +4,7 @@ const API_ADMIN_BASE = `${API_LINK}/api/admin`;
 const TOKEN_KEY = "memeify_token";
 const TOKEN_USER = "memeify_user";
 const ADMIN_ROLE_ID = 1;
+const API_CALL_LIMIT = 20;
 
 function getToken() {
   return localStorage.getItem(TOKEN_KEY);
@@ -116,12 +117,12 @@ function renderUsers(users) {
   users.forEach((u) => {
     if (u.id === getCurrentUser().id) return;
     const tr = document.createElement("tr");
+    console.log(u)
 
-    const username = u.username ?? u.userName ?? u.name ?? "(no username)";
-    tr.appendChild(createCell(username));
-    tr.appendChild(createCell(u.email ?? ""));
-
+    tr.appendChild(createCell(u.username));
+    tr.appendChild(createCell(u.email));
     tr.appendChild(createCell(u.roles.map((r) => r.roleType).join(", ")));
+    tr.appendChild(createCell(`${u.apiCalls}/${API_CALL_LIMIT}`))
 
     const actionsTd = document.createElement("td");
     actionsTd.className = "actions";
