@@ -84,7 +84,12 @@ async function updateUser() {
   // get username and put it in its places
   user = JSON.parse(userInfoString);
 
-  user = await getUser(user.id);
+  try {
+    user = await getUser(user.id);
+  } catch {
+    window.location.href = "login.html";
+    return;
+  }
 
   document.getElementById("userEmail").innerText = user.username;
   // get usage count
