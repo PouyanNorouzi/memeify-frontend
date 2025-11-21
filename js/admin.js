@@ -71,16 +71,34 @@ async function fetchUsers() {
   return payload.users || [];
 }
 
-async function promoteUser(userId) {
+async function fetchStats() {
   const token = getToken();
-  if (!token) throw new Error("Missing token");
-  const res = await fetch(`${API_ADMIN_BASE}/promote`, {
-    method: "POST",
+  if (!token) {
+    setStatus("No token found. Please login as admin.", "#b00");
+    return [];
+  }
+
+  const res = await fetch(`${API_ADMIN_BASE}/stats`, {
+    method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ userId }),
+  });
+  const payload = await handleResponse(res);
+  // server returns { stats: [...] }
+  return payload.stats || [];
+}
+
+async function promoteUser(userId) {
+  const token = getToken();
+  if (!token) throw new Error("Missing token");
+  const res = await fetch(`${API_ADMIN_BASE}/users/${userId}/promote`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
   });
   return await handleResponse(res);
 }
@@ -88,15 +106,38 @@ async function promoteUser(userId) {
 async function deleteUser(userId) {
   const token = getToken();
   if (!token) throw new Error("Missing token");
-  const res = await fetch(`${API_ADMIN_BASE}/delete`, {
-    method: "POST",
+  const res = await fetch(`${API_ADMIN_BASE}/users/${userId}`, {
+    method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ userId }),
   });
   return await handleResponse(res);
+}
+
+function renderStats(stats) {
+  const tbody = document.getElementById("statsBody");
+  tbody.innerHTML = "";
+
+  if (!stats || stats.length === 0) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 3;
+    td.textContent = "No endpoint statistics available.";
+    td.style.opacity = "0.8";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  stats.forEach((stat) => {
+    const tr = document.createElement("tr");
+    tr.appendChild(createCell(stat.method));
+    tr.appendChild(createCell(stat.endpoint));
+    tr.appendChild(createCell(stat.requestCount));
+    tbody.appendChild(tr);
+  });
 }
 
 function renderUsers(users) {
@@ -132,7 +173,7 @@ function renderUsers(users) {
       promoteBtn.className = "btn btn-promote";
       promoteBtn.textContent = "Promote";
       promoteBtn.addEventListener("click", async () => {
-        if (!confirm(`Promote ${username} to admin?`)) return;
+        if (!confirm(`Promote ${u.username} to admin?`)) return;
         try {
           setStatus("Promoting...", "#333");
           const id = getIdFromUser(u);
@@ -151,7 +192,7 @@ function renderUsers(users) {
     deleteBtn.className = "btn btn-delete";
     deleteBtn.textContent = "Delete";
     deleteBtn.addEventListener("click", async () => {
-      if (!confirm(`Delete user ${username}? This cannot be undone.`)) return;
+      if (!confirm(`Delete user ${u.username}? This cannot be undone.`)) return;
       try {
         setStatus("Deleting...", "#333");
         const id = getIdFromUser(u);
@@ -183,6 +224,20 @@ async function reloadUsers() {
   }
 }
 
+async function reloadStats() {
+  try {
+    const stats = await fetchStats();
+    renderStats(stats);
+  } catch (err) {
+    console.error("Fetch stats error:", err);
+  }
+}
+
+async function reloadAll() {
+  await reloadStats();
+  await reloadUsers();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   if(!getToken() || !getCurrentUser()) {
     alert("user not logged in");
@@ -198,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
 
   refreshBtn.addEventListener("click", () => {
-    reloadUsers();
+    reloadAll();
   });
 
   logoutBtn.addEventListener("click", () => {
@@ -207,5 +262,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // initial load
-  reloadUsers();
+  reloadAll();
 });
