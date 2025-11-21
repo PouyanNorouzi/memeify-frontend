@@ -15,7 +15,11 @@ document.getElementById("logout").onclick = () => {
 
 // Admin Role UI
 if (user.roles.map((r) => r.id).includes(ADMIN_ROLE_ID)) {
-  document.getElementById("admin-link").style.display = "block";
+  const adminLink = document.getElementById("admin-link");
+  adminLink.style.display = "block";
+  adminLink.onclick = () => {
+    window.location.href = "admin.html";
+  };
 }
 
 // Caption Generation Logic

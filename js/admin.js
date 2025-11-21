@@ -1,4 +1,5 @@
 import { API_LINK } from "./modules/apiLink.js";
+import { logout } from "./modules/auth.js";
 
 const API_ADMIN_BASE = `${API_LINK}/api/admin`;
 const TOKEN_KEY = "memeify_token";
@@ -250,15 +251,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const refreshBtn = document.getElementById("refreshBtn");
+  const userPageBtn = document.getElementById("userPageBtn");
   const logoutBtn = document.getElementById("logoutBtn");
 
   refreshBtn.addEventListener("click", () => {
     reloadAll();
   });
 
+  userPageBtn.addEventListener("click", () => {
+    window.location.href = "user.html";
+  });
+
   logoutBtn.addEventListener("click", () => {
-    clearToken();
-    setStatus("Token cleared. Reload to login.", "#333");
+    logout().then(() => (window.location.href = "index.html"));
   });
 
   // initial load
