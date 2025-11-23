@@ -1,0 +1,31 @@
+/* Page-specific tweaks for admin pages */
+.admin-manage-container,
+.admin-container {
+    background: #fff;
+    color: #0f172a;
+    border: 1px solid rgba(2, 6, 23, 0.04);
+    box-shadow: 0 10px 36px rgba(2, 6, 23, 0.06);
+}
+
+.admin-table,
+.admin-manage-table {
+    background: transparent;
+}
+
+.admin-manage-table th {
+    background: linear-gradient(90deg, #f8fafc, #f1f5f9);
+    color: #0f172a;
+}
+
+.btn-logout-admin {
+    background: #ef4444;
+    color: #fff;
+}
+
+@media (max-width:760px) {
+
+    .admin-manage-table,
+    .admin-table {
+        font-size: 0.9rem;
+    }
+}
