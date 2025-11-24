@@ -1,65 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Memeify Admin Dashboard - Manage users and view API statistics" />
-    <title>Admin Dashboard | Memeify</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/admin.css" />
-  </head>
-  <body class="admin-manage-body">
-    <div class="admin-manage-container">
-      <h1>Admin — Manage Users</h1>
-      <p class="small">
-        List of registered users. Promote a user to admin or delete a user.
-      </p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Memeify Admin Dashboard - Manage users and view API statistics" />
+  <title>Admin Dashboard | Memeify</title>
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="admin-manage-body">
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
 
-      <div id="status" class="message"></div>
+  <div class="admin-manage-container">
+    <h1>Admin — Manage Users</h1>
+    <p class="small">
+      List of registered users. Promote a user to admin or delete a user.
+    </p>
 
-      <div id="controls">
-        <button id="refreshBtn" class="btn btn-refresh">Refresh</button>
-        <button id="userPageBtn" class="btn btn-primary">Go to User Page</button>
-        <button id="logoutBtn" class="btn btn-logout-admin">
-          Logout
-        </button>
-      </div>
+    <div id="status" class="message"></div>
 
-      <h2>API Endpoint Statistics</h2>
-      <div id="statsWrapper">
-        <table id="statsTable" class="admin-manage-table" aria-live="polite">
-          <thead>
-            <tr>
-              <th>Method</th>
-              <th>Endpoint</th>
-              <th>Requests</th>
-            </tr>
-          </thead>
-          <tbody id="statsBody">
-            <!-- stats rows inserted here -->
-          </tbody>
-        </table>
-      </div>
-
-      <h2>User Management</h2>
-      <div id="listWrapper">
-        <table id="usersTable" class="admin-manage-table" aria-live="polite">
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Roles</th>
-              <th>API Calls</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="usersBody">
-            <!-- rows inserted here -->
-          </tbody>
-        </table>
-      </div>
+    <div id="controls">
+      <button id="refreshBtn" class="btn btn-refresh">Refresh</button>
+      <button id="userPageBtn" class="btn btn-primary">Go to User Page</button>
+      <button id="logoutBtn" class="btn btn-logout-admin">
+        Logout
+      </button>
     </div>
 
-    <script type="module" src="js/admin.js"></script>
-  </body>
+    <h2>API Endpoint Statistics</h2>
+    <div id="statsWrapper">
+      <table id="statsTable" class="admin-manage-table" aria-live="polite">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Endpoint</th>
+            <th>Requests</th>
+          </tr>
+        </thead>
+        <tbody id="statsBody">
+          <!-- stats rows inserted here -->
+        </tbody>
+      </table>
+    </div>
+
+    <h2>User Management</h2>
+    <div id="listWrapper">
+      <table id="usersTable" class="admin-manage-table" aria-live="polite">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>API Calls</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="usersBody">
+          <!-- rows inserted here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
 </html>
