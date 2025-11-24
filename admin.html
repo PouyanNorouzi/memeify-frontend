@@ -7,6 +7,7 @@
   <title>Admin Dashboard | Memeify</title>
   <link rel="stylesheet" href="css/admin.css" />
 </head>
+
 <body class="admin-manage-body">
   <div class="particles">
     <div class="particle"></div>
@@ -19,52 +20,59 @@
 
   <div class="admin-manage-container">
     <h1>Admin — Manage Users</h1>
-    <p class="small">
-      List of registered users. Promote a user to admin or delete a user.
-    </p>
+    <p class="small">List of registered users. Promote a user to admin or delete a user.</p>
 
     <div id="status" class="message"></div>
 
     <div id="controls">
       <button id="refreshBtn" class="btn btn-refresh">Refresh</button>
       <button id="userPageBtn" class="btn btn-primary">Go to User Page</button>
-      <button id="logoutBtn" class="btn btn-logout-admin">
-        Logout
-      </button>
+      <button id="logoutBtn" class="btn btn-logout-admin">Logout</button>
     </div>
 
-    <h2>API Endpoint Statistics</h2>
-    <div id="statsWrapper">
-      <table id="statsTable" class="admin-manage-table" aria-live="polite">
-        <thead>
-          <tr>
-            <th>Method</th>
-            <th>Endpoint</th>
-            <th>Requests</th>
-          </tr>
-        </thead>
-        <tbody id="statsBody">
-          <!-- stats rows inserted here -->
-        </tbody>
-      </table>
+    <!-- 🔥 NEW NAV BAR -->
+    <div class="admin-nav">
+      <button class="nav-btn active" data-target="statsSection">API Statistics</button>
+      <button class="nav-btn" data-target="usersSection">User Management</button>
+    </div>
+    <!-- ---------------------- -->
+    <div id="statsSection" class="tab-section visible">
+      <h2>API Endpoint Statistics</h2>
+      <div id="statsWrapper">
+        <table id="statsTable" class="admin-manage-table" aria-live="polite">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Endpoint</th>
+              <th>Requests</th>
+            </tr>
+          </thead>
+          <tbody id="statsBody">
+            <!-- stats rows inserted here -->
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <h2>User Management</h2>
-    <div id="listWrapper">
-      <table id="usersTable" class="admin-manage-table" aria-live="polite">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Roles</th>
-            <th>API Calls</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="usersBody">
-          <!-- rows inserted here -->
-        </tbody>
-      </table>
+
+    <div id="usersSection" class="tab-section hidden">
+      <h2>User Management</h2>
+      <div id="listWrapper">
+        <table id="usersTable" class="admin-manage-table" aria-live="polite">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Roles</th>
+              <th>API Calls</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersBody">
+            <!-- user rows inserted here -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 

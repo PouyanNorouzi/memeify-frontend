@@ -269,3 +269,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // initial load
   reloadAll();
 });
+
+document.querySelectorAll(".nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    // Remove active class from all buttons
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    // Hide all sections
+    document.querySelectorAll(".tab-section").forEach(sec => {
+      sec.classList.add("hidden");
+      sec.classList.remove("visible");
+    });
+
+    // Show selected section
+    const target = btn.dataset.target;
+    document.getElementById(target).classList.add("visible");
+    document.getElementById(target).classList.remove("hidden");
+  });
+});
