@@ -1,1 +1,1 @@
-export const API_LINK = "http://localhost:3000"
+export const API_LINK = "https://memeify-server.pouyannorouzi.com"
